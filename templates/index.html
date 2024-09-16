@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конвертер валют</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/graf_script.js') }}" defer></script>
+</head>
+<body>
+
+<div class="container">
+    <!-- Currency Converter -->
+    <div class="converter-header">
+        <h1>Конвертер валют</h1>
+        <span class="date-updated">Дата обновления: 2024-09-16 12:05 UTC</span>
+    </div>
+
+    <div class="currency-converter">
+        <div class="converter-box">
+            <label for="from-amount">У меня есть</label>
+            <input type="number" id="from-amount" value="213">
+        </div>
+
+        <!-- Currency selection -->
+        <div class="converter-box">
+            <label for="from-currency">Валюта</label>
+            <div class="flag-icon">
+                <select id="from-currency">
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="UAH">UAH</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="swap-icon" onclick="swapCurrencies()">⇄</div>
+
+        <div class="converter-box">
+            <label for="to-amount">Я получу</label>
+            <input type="text" id="to-amount" value="8764.95" disabled>
+        </div>
+
+        <!-- Target currency selection -->
+        <div class="converter-box">
+            <label for="to-currency">Валюта</label>
+            <div class="flag-icon">
+                <select id="to-currency">
+                    <option value="UAH">UAH</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="conversion-result">
+            <p>1 USD = <span id="conversion-rate">41.15</span> UAH</p>
+        </div>
+
+        <div class="time-filter">
+    <button onclick="updateTimeframe('48h')" id="48h-button">48h</button>
+    <button onclick="updateTimeframe('1w')" id="1w-button">1 week</button>
+    <button onclick="updateTimeframe('1m')" class="active" id="1m-button">1 month</button>
+    <button onclick="updateTimeframe('6m')" id="6m-button">6 months</button>
+    <button onclick="updateTimeframe('1y')" id="1y-button">1 year</button>
+</div>
+
+<canvas id="exchangeRateChart" width="400" height="200"></canvas>
+
+<script>
+    // Add functionality to make the selected button "active"
+    document.querySelectorAll('.time-filter button').forEach(button => {
+        button.addEventListener('click', () => {
+            document.querySelectorAll('.time-filter button').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+        });
+    });
+</script>
+
+    </div>
+</div>
+
+</body>
+</html>

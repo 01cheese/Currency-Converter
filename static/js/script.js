@@ -13,7 +13,7 @@ function calculateConversion() {
         .then(response => response.json())
         .then(data => {
             if (data.error) {
-                alert(data.error);
+                document.getElementById('error-message').textContent = data.error;
             } else {
                 // Update the converted amount
                 document.getElementById('to-amount').value = data.result.toFixed(2);
@@ -24,6 +24,38 @@ function calculateConversion() {
             }
         });
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('/currencies')
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+            } else {
+                const fromCurrencyDropdown = document.getElementById('from-currency');
+                const toCurrencyDropdown = document.getElementById('to-currency');
+
+                // Clear existing options
+                fromCurrencyDropdown.innerHTML = '';
+                toCurrencyDropdown.innerHTML = '';
+
+                // Populate both dropdowns with available currencies
+                data.currencies.forEach(currency => {
+                    const option = document.createElement('option');
+                    option.value = currency[0];
+                    option.textContent = `${currency[1]} (${currency[0]})`;
+
+                    fromCurrencyDropdown.appendChild(option.cloneNode(true));
+                    toCurrencyDropdown.appendChild(option);
+                });
+
+                // Trigger the first conversion with default values
+                calculateConversion();
+            }
+        });
+});
+
+
 function swapCurrencies() {
     const fromCurrency = document.getElementById('from-currency');
     const toCurrency = document.getElementById('to-currency');

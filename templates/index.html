@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script src="{{ url_for('static', filename='js/graf_script.js') }}" defer></script>
 </head>
 <body>
@@ -19,25 +21,34 @@
         <span class="date-updated">Дата обновления: 2024-09-16 12:05 UTC</span>
     </div>
 
+    <!-- Currency selection -->
+        <div class="converter-box">
+            <label for="from-currency">Валюта</label>
+            <div class="flag-icon">
+                <select id="from-currency"></select>
+            </div>
+        </div>
+
     <div class="currency-converter">
         <div class="converter-box">
             <label for="from-amount">У меня есть</label>
             <input type="number" id="from-amount" value="213">
         </div>
 
+
+
+        <div class="swap-icon" onclick="swapCurrencies()">⇄</div>
+
         <!-- Currency selection -->
         <div class="converter-box">
             <label for="from-currency">Валюта</label>
             <div class="flag-icon">
-                <select id="from-currency">
-                    <option value="USD">USD</option>
-                    <option value="EUR">EUR</option>
-                    <option value="UAH">UAH</option>
-                </select>
+                <select id="to-currency"></select>
             </div>
         </div>
 
-        <div class="swap-icon" onclick="swapCurrencies()">⇄</div>
+
+
 
         <div class="converter-box">
             <label for="to-amount">Я получу</label>
@@ -60,15 +71,10 @@
             <p>1 USD = <span id="conversion-rate">41.15</span> UAH</p>
         </div>
 
-        <div class="time-filter">
-    <button onclick="updateTimeframe('48h')" id="48h-button">48h</button>
-    <button onclick="updateTimeframe('1w')" id="1w-button">1 week</button>
-    <button onclick="updateTimeframe('1m')" class="active" id="1m-button">1 month</button>
-    <button onclick="updateTimeframe('6m')" id="6m-button">6 months</button>
-    <button onclick="updateTimeframe('1y')" id="1y-button">1 year</button>
+
+
 </div>
 
-<canvas id="exchangeRateChart" width="400" height="200"></canvas>
 
 <script>
     // Add functionality to make the selected button "active"

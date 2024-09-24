@@ -50,5 +50,24 @@ def convert_currency():
     return jsonify({'result': converted_amount, 'rate': rate, 'historical_data': historical_data})
 
 
+@app.route('/currencies', methods=['GET'])
+def get_currencies():
+    api_key = 'bec71f42f34eba067cc235aa'
+    response = requests.get(f'https://v6.exchangerate-api.com/v6/{api_key}/codes')
+
+    if response.status_code != 200:
+        return jsonify({'error': 'Failed to fetch currency codes'}), 500
+
+    data = response.json()
+
+    if 'supported_codes' not in data:
+        return jsonify({'error': 'Invalid data format from exchange rate API'}), 500
+
+    supported_codes = data['supported_codes']
+    return jsonify({'currencies': supported_codes})
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
